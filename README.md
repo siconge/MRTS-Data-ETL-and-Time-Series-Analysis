@@ -19,11 +19,10 @@
     - [2.4.2 Reading the MRTS Data](#242-reading-the-mrts-data)
     - [2.5 Writing an Installation Script](#25-writing-an-installation-script)
   - [3. Analysis and Visualization](#3-analysis-and-visualization)
-    - [3.1 Running Queries in MySQL Workbech](#31-running-queries-in-mysql-workbech)
-    - [3.2 Running Queries From Python](#32-running-queries-from-python)
-    - [3.3 Explore Trends](#33-explore-trends)
-    - [3.4 Explore Percentage Change](#34-explore-percentage-change)
-    - [3.5 Explore Rolling Time Windows](#35-explore-rolling-time-windows)
+    - [3.1 Running Queries From Python](#31-running-queries-from-python)
+    - [3.2 Explore Trends](#32-explore-trends)
+    - [3.3 Explore Percentage Change](#33-explore-percentage-change)
+    - [3.4 Explore Rolling Time Windows](#34-explore-rolling-time-windows)
   - [Conclusion](#conclusion)
   - [References](#references)
 
@@ -563,25 +562,7 @@ Disadvantages:
 
 [Back to top](#Index)
 
-### 3.1 Running Queries in MySQL Workbech
-
-Sample *queries* are run against the MRTS dataset in MySQL Workbench to verify that everything works as expected.
-
-Query 1:
-```python
-SELECT * FROM mrts.`2008` WHERE Total >= 1500000 ORDER BY `Total` DESC;
-```
-Query 2:
-```python
-SELECT COUNT(*) Count FROM mrts.`2008`;
-```
-The tables returned as below after executing the above statements show that they are working.
-
-![Screen%20Shot%202023-11-01%20at%207.58.06%20AM-2.png](attachment:Screen%20Shot%202023-11-01%20at%207.58.06%20AM-2.png)
-
-[Back to top](#Index)
-
-### 3.2 Running Queries From Python
+### 3.1 Running Queries From Python
 
 The process of running the previous queries on the MRTS dataset by using a Python script is shown step by step in the following Python script. The print results are the same as in MySQL Workbench, verifying that everything works as expected.
 
@@ -626,7 +607,7 @@ print(cursor.fetchone())
 
 [Back to top](#Index)
 
-### 3.3 Explore Trends
+### 3.2 Explore Trends
 
 An economic trend refers to the general direction in which a particular economic variable or set of variables is moving over time. Economic trends can encompass a wide range of factors, including economic indicators like GDP, inflation rates, unemployment rates, consumer spending, and more. These trends are used to analyze and understand the overall health and performance of an economy. Consumer spending patterns are often influenced by broader economic trends. In a robust economy with low unemployment, consumers may be more confident and willing to spend, while during economic downturns, consumers may cut back on spending.
 
@@ -705,7 +686,7 @@ plt.show()
 
 
     
-![png](output_23_0.png)
+![png](output_21_0.png)
     
 
 
@@ -765,13 +746,13 @@ plt.show()
 
 
     
-![png](output_24_0.png)
+![png](output_22_0.png)
     
 
 
 [Back to top](#Index)
 
-### 3.4 Explore Percentage Change
+### 3.3 Explore Percentage Change
 
 Percentage change is used to calculate by what percentage a variable has changed over a time period. One example is the percentage change in end of day closing prices of stocks. Percentage change is a crucial measure in economics and various other fields because it helps to quantify and express how much a particular variable or quantity has changed in relative terms, rather than absolute terms. It is calculated by the formula below, where $C =$ relative change, $x_{1} =$ previous value, and $x_{2} =$ current value.
 $$ C(\%) = \frac{(x_{2}-x_{1})}{x_{1}} * 100 $$
@@ -866,13 +847,13 @@ plt.show()
 
 
     
-![png](output_26_0.png)
+![png](output_24_0.png)
     
 
 
 [Back to top](#Index)
 
-### 3.5 Explore Rolling Time Windows
+### 3.4 Explore Rolling Time Windows
 
 A rolling time window, in economics and data analysis, is a method used to analyze data over a specific time period that continuously updates as time progresses. It involves repeatedly computing statistics or performing analysis on a fixed-size time interval of data, then moving the window forward by a certain time increment (e.g., days, weeks, months) and performing the same analysis again. This rolling or moving window approach allows for a dynamic assessment of data trends and patterns over time.
 
@@ -921,7 +902,7 @@ plt.show()
 
 
     
-![png](output_28_0.png)
+![png](output_26_0.png)
     
 
 
