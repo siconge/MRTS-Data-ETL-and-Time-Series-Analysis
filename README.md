@@ -6,7 +6,7 @@
 
 [Go to repository](https://github.com/siconge/MRTS-ETL-Time-Series-Analysis)
 
-## Index
+## Table of Contents
 
 - [Abstract](#abstract)
 - [1. Introduction](#1-introduction)
@@ -24,15 +24,13 @@
 - [Conclusion](#conclusion)
 - [References](#references)
 
-[Back to top](#index)
-
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ##  Abstract
 
 The Monthly Retail Trade Survey (MRTS) is conducted by the U.S. Census Bureau to gather data from retail businesses, providing insights into the retail sector's performance. This data covers various aspects of retail, including sales and inventories. This project has two primary goals: to perform ETL (Extract, Transform, Load) processing on the MRTS dataset using Python and powerful data transformation libraries like Pandas and SQLAlchemy, and to apply key time series analysis techniques to analyze the data of target businesses. The process involves using MySQL for data retrieval and Python for detailed data manipulation and visualization.
 
-[Back to top](#index)
-
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ## 1. Introduction
 
@@ -41,11 +39,11 @@ This project consists of three main steps:
 2. **Database Creation and Data Loading**: Next, a connection to the MySQL database is established by creating an engine with `sqlalchemy.create_engine` and a connection string using the MySQL Connector driver. SQL queries are executed from Python to create the database structure, and the extracted CSV files are loaded into the database.
 3. **Time Series Analysis and Visualization**: Finally, key techniques such as trend analysis, percentage changes, and rolling time windows are applied to analyze the time series data in the database. The manipulated data of target businesses is visualized using the Matplotlib library, with plots refined to interpret the data and derive meaningful insights.
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ## 2. Extract-Transform-Load
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 2.1 The ETL Process
 
@@ -55,7 +53,7 @@ The integrated ETL process for the MRTS dataset involves:
 2. **Transform**: Preliminary data cleaning and manipulation are performed within the DataFrames, which are then exported to CSV files. The transformation process is automated using a CSV extraction script that outputs CSV files through the `pandas.to_csv` function.
 3. **Load**: The CSV files are loaded into a MySQL database as tables. A database creation script utilizes `sqlalchemy.create_engine` and `mysql.connector` for database connectivity. This script creates the *mrts* database in MySQL (if it does not already exist) and loads the CSV files into the database as tables.
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 2.2 Data Exploration
 
@@ -67,7 +65,7 @@ If the data does not meet publication standards due to high sampling variability
 
 There are two main categories of estimates: *Non-adjusted* and *Adjusted*. *Non-adjusted* is the raw sales data, while *Adjusted* are the estimates presents sales data adjusted for seasonal variations, holidays, or other factors to provide a more accurate picture of monthly sales trends. For the purposes of this project's analysis, the *Non-adjusted* data was used.
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 2.3 Data Preparation
 
@@ -144,7 +142,7 @@ print(f'"2021.csv" saved in folder "csv" successfully!')
     "2021.csv" saved in folder "csv" successfully!
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 2.4 Read MRTS Data
 
@@ -390,7 +388,7 @@ df
 
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 2.5 Database Creation
 
@@ -473,11 +471,11 @@ except mysql.connector.Error as err:
     Data from "1998.csv" loaded into table "1998" successfully!
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ## 3. Analysis and Visualization
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 3.1 Run Queries From Python
 
@@ -519,7 +517,7 @@ print(cursor.fetchone())
     (65,)
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 3.2 Explore Trends
 
@@ -665,7 +663,7 @@ plt.show()
     
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 3.3 Explore Percentage Change
 
@@ -766,7 +764,7 @@ plt.show()
     
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ### 3.4 Explore Rolling Time Windows
 
@@ -821,7 +819,7 @@ plt.show()
     
 
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ## Conclusion
 
@@ -829,7 +827,7 @@ By applying several key techniques, including trend analysis, percentage changes
 
 Among all the businesses studied, retail and food services, sporting goods stores, and car dealers have all experienced approximately a twofold increase in sales over the time series. These sectors are likely to attract the most spending in the future. In contrast, bookstores, as a traditional business, have sustained a downtrend since 2008 and are expected to attract the least spending going forward.
 
-[Back to top](#index)
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 ## References
 
@@ -838,5 +836,7 @@ Among all the businesses studied, retail and food services, sporting goods store
 - Prabhakaran, Selva. "Time Series Analysis in Python – A Comprehensive Guide with Examples." machinelearningplus. https://www.machinelearningplus.com/time-series/time-series-analysis-python/ .
 
 - "Working with Engines and Connections." SQLAlchemy. https://docs.sqlalchemy.org/en/20/core/connections.html .
+
+[Back to top](#etl-processing-and-time-series-analysis-of-mrts-dataset)
 
 &#160;
