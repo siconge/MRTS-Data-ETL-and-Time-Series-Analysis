@@ -6,7 +6,7 @@
 
 **Sicong E**
 
-# Index
+## Index
 
 - [Abstract](#abstract)
 - [1. Introduction](#1-introduction)
