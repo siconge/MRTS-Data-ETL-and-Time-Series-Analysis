@@ -1,7 +1,3 @@
-<div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; border-top: 1px solid #cccccc; padding: 10px; text-align: center; z-index: 1000;">
-    <a href="https://siconge.github.io/">Back to Portfolio</a>
-</div>
-
 # ETL Processing and Time Series Analysis of MRTS Dataset
 
 **Sicong E**
