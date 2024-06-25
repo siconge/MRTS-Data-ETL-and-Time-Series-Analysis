@@ -4,7 +4,7 @@
 
 # ETL Processing and Time Series Analysis of MRTS Dataset
 
-**Sicong E**
+[Go to repository](https://github.com/siconge/MRTS-ETL-Time-Series-Analysis)
 
 ## Index
 
