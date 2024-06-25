@@ -1,33 +1,37 @@
+<div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; border-top: 1px solid #cccccc; padding: 10px; text-align: center; z-index: 1000;">
+    <a href="https://siconge.github.io/">Back to Portfolio</a>
+</div>
+
 # ETL Processing and Time Series Analysis of MRTS Dataset
 
 **Sicong E**
 
 # Index
 
-- [Abstract](#Abstract)
-- [1. Introduction](#1.-Introduction)
-- [2. Extract-Transform-Load](#2.-Extract-Transform-Load)
-    - [2.1 The ETL Process](#2.1-The-ETL-Process)
-    - [2.2 Data Exploration](#2.2-Data-Exploration)
-    - [2.3 Data Preparation](#2.3-Data-Preparation)
-    - [2.4 Read MRTS Data](#2.4-Read-MRTS-Data)
-    - [2.5 Database Creation](#2.5-Database-Creation)
-- [3. Analysis and Visualization](#3.-Analysis-and-Visualization)
-    - [3.1 Run Queries From Python](#3.1-Run-Queries-From-Python)
-    - [3.2 Explore Trends](#3.2-Explore-Trends)
-    - [3.3 Explore Percentage Change](#3.3-Explore-Percentage-Change)
-    - [3.4 Explore Rolling Time Windows](#3.4-Explore-Rolling-Time-Windows)
-- [Conclusion](#Conclusion)
-- [References](#References)
+- [Abstract](#abstract)
+- [1. Introduction](#1-introduction)
+- [2. Extract-Transform-Load](#2-extract-transform-load)
+    - [2.1 The ETL Process](#21-the-etl-process)
+    - [2.2 Data Exploration](#22-data-exploration)
+    - [2.3 Data Preparation](#23-data-preparation)
+    - [2.4 Read MRTS Data](#24-read-mrts-data)
+    - [2.5 Database Creation](#25-database-creation)
+- [3. Analysis and Visualization](#3-analysis-and-visualization)
+    - [3.1 Run Queries From Python](#31-run-queries-from-python)
+    - [3.2 Explore Trends](#32-explore-trends)
+    - [3.3 Explore Percentage Change](#33-explore-percentage-change)
+    - [3.4 Explore Rolling Time Windows](#34-explore-rolling-time-windows)
+- [Conclusion](#conclusion)
+- [References](#references)
 
-[Back to top](#Index)
+[Back to top](#index)
 
 
 ##  Abstract
 
 The Monthly Retail Trade Survey (MRTS) is conducted by the U.S. Census Bureau to gather data from retail businesses, providing insights into the retail sector's performance. This data covers various aspects of retail, including sales and inventories. This project has two primary goals: to perform ETL (Extract, Transform, Load) processing on the MRTS dataset using Python and powerful data transformation libraries like Pandas and SQLAlchemy, and to apply key time series analysis techniques to analyze the data of target businesses. The process involves using MySQL for data retrieval and Python for detailed data manipulation and visualization.
 
-[Back to top](#Index)
+[Back to top](#index)
 
 
 ## 1. Introduction
@@ -37,11 +41,11 @@ This project consists of three main steps:
 2. **Database Creation and Data Loading**: Next, a connection to the MySQL database is established by creating an engine with `sqlalchemy.create_engine` and a connection string using the MySQL Connector driver. SQL queries are executed from Python to create the database structure, and the extracted CSV files are loaded into the database.
 3. **Time Series Analysis and Visualization**: Finally, key techniques such as trend analysis, percentage changes, and rolling time windows are applied to analyze the time series data in the database. The manipulated data of target businesses is visualized using the Matplotlib library, with plots refined to interpret the data and derive meaningful insights.
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ## 2. Extract-Transform-Load
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 2.1 The ETL Process
 
@@ -51,7 +55,7 @@ The integrated ETL process for the MRTS dataset involves:
 2. **Transform**: Preliminary data cleaning and manipulation are performed within the DataFrames, which are then exported to CSV files. The transformation process is automated using a CSV extraction script that outputs CSV files through the `pandas.to_csv` function.
 3. **Load**: The CSV files are loaded into a MySQL database as tables. A database creation script utilizes `sqlalchemy.create_engine` and `mysql.connector` for database connectivity. This script creates the *mrts* database in MySQL (if it does not already exist) and loads the CSV files into the database as tables.
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 2.2 Data Exploration
 
@@ -63,7 +67,7 @@ If the data does not meet publication standards due to high sampling variability
 
 There are two main categories of estimates: *Non-adjusted* and *Adjusted*. *Non-adjusted* is the raw sales data, while *Adjusted* are the estimates presents sales data adjusted for seasonal variations, holidays, or other factors to provide a more accurate picture of monthly sales trends. For the purposes of this project's analysis, the *Non-adjusted* data was used.
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 2.3 Data Preparation
 
@@ -140,7 +144,7 @@ print(f'"2021.csv" saved in folder "csv" successfully!')
     "2021.csv" saved in folder "csv" successfully!
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 2.4 Read MRTS Data
 
@@ -386,7 +390,7 @@ df
 
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 2.5 Database Creation
 
@@ -469,11 +473,11 @@ except mysql.connector.Error as err:
     Data from "1998.csv" loaded into table "1998" successfully!
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ## 3. Analysis and Visualization
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 3.1 Run Queries From Python
 
@@ -515,7 +519,7 @@ print(cursor.fetchone())
     (65,)
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 3.2 Explore Trends
 
@@ -661,7 +665,7 @@ plt.show()
     
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 3.3 Explore Percentage Change
 
@@ -762,7 +766,7 @@ plt.show()
     
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ### 3.4 Explore Rolling Time Windows
 
@@ -817,7 +821,7 @@ plt.show()
     
 
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ## Conclusion
 
@@ -825,7 +829,7 @@ By applying several key techniques, including trend analysis, percentage changes
 
 Among all the businesses studied, retail and food services, sporting goods stores, and car dealers have all experienced approximately a twofold increase in sales over the time series. These sectors are likely to attract the most spending in the future. In contrast, bookstores, as a traditional business, have sustained a downtrend since 2008 and are expected to attract the least spending going forward.
 
-[Back to top](#Index)
+[Back to top](#index)
 
 ## References
 
