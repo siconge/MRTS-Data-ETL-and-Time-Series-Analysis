@@ -4,61 +4,42 @@
 
 # ETL Processing and Time Series Analysis of MRTS Dataset
 
+**Sicong E**
+
 # Index
 
-- [ETL Processing and Time Series Analysis of MRTS Dataset](#etl-processing-and-time-series-analysis-of-mrts-dataset)
-- [Index](#index)
-  - [Abstract](#abstract)
-  - [1. Introduction](#1-introduction)
-  - [2. Extract-Transform-Load](#2-extract-transform-load)
-    - [2.1 The ETL Process](#21-the-etl-process)
-    - [2.2 Data Exploration](#22-data-exploration)
-    - [2.3 Data Preparation](#23-data-preparation)
-    - [2.4 Read the Data Using Python](#24-read-the-data-using-python)
-    - [2.4.1 Reading Sample Data](#241-reading-sample-data)
-    - [2.4.2 Reading the MRTS Data](#242-reading-the-mrts-data)
-    - [2.5 Writing an Installation Script](#25-writing-an-installation-script)
-  - [3. Analysis and Visualization](#3-analysis-and-visualization)
-    - [3.1 Running Queries From Python](#31-running-queries-from-python)
-    - [3.2 Explore Trends](#32-explore-trends)
-    - [3.3 Explore Percentage Change](#33-explore-percentage-change)
-    - [3.4 Explore Rolling Time Windows](#34-explore-rolling-time-windows)
-  - [Conclusion](#conclusion)
-  - [References](#references)
-
-STEP 1: Data Extration + Data Transformation
-Used the Pandas function ExcelFile to extract the table consisting of rows and columns determined to be retained in each worksheet of the original MRTS dataset Excel into Pandas DataFrames, and batch output each DataFrames of the corresponding worksheet to a CSV file. The entire process of this step, including the initial normalization of the data in the form of DataFrames, was implemented in one go through the Python CSV extraction script, which served as the basis for the next step of importing the CSV file into a SQL database.
-
-STEP 2: MySQL Engine Creation + MySQL DB Connection Establishing + Data Loading
-Created an engine for MySQL by virtue of the create_engine function from the SQLAlchemy library, then used the MySQL Connector library / Python driver to instantiate a connection to the MySQL database via the Python installation script. The script was also tasked with creating a SQL database by running SQL queries from Python, and loading the extracted CSVs into that database.
-
-STEP 3: Data Analysis
-Applied several of the most important techniques, including trends, percentage changes, and rolling time windows, to analyze the database's time series. These technologies were implemented by combining SQL queries and a series of related functions in the Pandas library via Python.
-    
-STEP 4: Data Visualization
-Visualized and analyzed the manipulated data of the target businesses with the help of the Matplotlib library to refine the plots and interpret the meaning of the data in the best way.
+- [Abstract](#Abstract)
+- [1. Introduction](#1.-Introduction)
+- [2. Extract-Transform-Load](#2.-Extract-Transform-Load)
+    - [2.1 The ETL Process](#2.1-The-ETL-Process)
+    - [2.2 Data Exploration](#2.2-Data-Exploration)
+    - [2.3 Data Preparation](#2.3-Data-Preparation)
+    - [2.4 Read MRTS Data](#2.4-Reading-MRTS-Data)
+    - [2.5 Writing Database Creation Script](#2.5-Writing-Database-Creation-Script)
+- [3. Analysis and Visualization](#3.-Analysis-and-Visualization)
+    - [3.1 Running Queries From Python](#3.1-Running-Queries-From-Python)
+    - [3.2 Explore Trends](#3.2-Explore-Trends)
+    - [3.3 Explore Percentage Change](#3.3-Explore-Percentage-Change)
+    - [3.4 Explore Rolling Time Windows](#3.4-Explore-Rolling-Time-Windows)
+- [Conclusion](#Conclusion)
+- [References](#References)
 
 [Back to top](#Index)
 
 
 ##  Abstract
 
-The Monthly Retail Trade Survey (MRTS) is a data collection program conducted by the Census Bureau in the US. It gathers data from retail businesses to provide information about the retail sector's performance. The MRTS data covers various aspects of retail, including sales, inventories, and more. The first goal of this project is to perform ETL process on the MRTS dataset by using Python and associated powerful data transforming libraries including Pandas and SQLAlchemy. The second goal is to apply several important techniques for time data analysis to analyze the data of target businesses. This process relies heavily on using MySQL queries for retrieval of target data and then using Python tools for fine manipulation and visualization of the retrieved data.
+The Monthly Retail Trade Survey (MRTS) is conducted by the U.S. Census Bureau to gather data from retail businesses, providing insights into the retail sector's performance. This data covers various aspects of retail, including sales and inventories. This project has two primary goals: to perform ETL (Extract, Transform, Load) processing on the MRTS dataset using Python and powerful data transformation libraries like Pandas and SQLAlchemy, and to apply key time series analysis techniques to analyze the data of target businesses. The process involves using MySQL for data retrieval and Python for detailed data manipulation and visualization.
 
 [Back to top](#Index)
 
 
 ## 1. Introduction
 
-This project consists of four steps.
-
-The first step is to leverage `pandas.ExcelFile` to extract the table consisting of rows and columns determined to be retained in each worksheet of the original MRTS dataset Excel into Pandas DataFrames, and batch output each DataFrames of the corresponding worksheet to a CSV file. The entire process of this step, including the initial normalization of the data in the form of DataFrames, can be implemented in one go through the **Python CSV extraction script**, which serves as the basis for the next step of importing the CSV file into a SQL database.
-
-The second step is to create an engine for MySQL by virtue of the create_engine function from the SQLAlchemy library to produce an Engine object based on a URL as connect string in format of `mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>`. This is followed by instantiating a connection to the MySQL database using the MySQL connector library/Python driver through the **Python installation script**. The script is also tasked with creating a SQL database by running SQL queries from Python, and loading the extracted CSVs into that database. All transformations of the data from raw to sanitized are done via the **Python CSV extraction script** in Step 1 and the **Python installation script** in Step 2.
-
-The third step is to apply several of the most important techniques, including trends, percentage changes, and rolling time windows, to analyze the database's time series. These technologies are implemented by combining SQL queries and a series of related functions in the Pandas library via Python.
-
-The final step involves visualizing and analyzing the manipulated data of the target businesses with the help of the Matplotlib library to refine the plots and interpret the meaning of the data in the best way.
+This project consists of three main steps:
+1. **Data Extraction and Normalization**: The process starts with extracting data from the MRTS dataset Excel file using `pandas.ExcelFile`. Specific rows and columns are retained for each worksheet. Each worksheet is converted into a Pandas DataFrame, normalized, and saved as a CSV file.
+2. **Database Creation and Data Loading**: Next, a connection to the MySQL database is established by creating an engine with `sqlalchemy.create_engine` and a connection string using the MySQL Connector driver. SQL queries are executed from Python to create the database structure, and the extracted CSV files are loaded into the database.
+3. **Time Series Analysis and Visualization**: Finally, key techniques such as trend analysis, percentage changes, and rolling time windows are applied to analyze the time series data in the database. The manipulated data of target businesses is visualized using the Matplotlib library, with plots refined to interpret the data and derive meaningful insights.
 
 [Back to top](#Index)
 
@@ -68,37 +49,27 @@ The final step involves visualizing and analyzing the manipulated data of the ta
 
 ### 2.1 The ETL Process
 
-The ETL process, which stands for Extract, Transform, Load, is a crucial step in data integration and preparation for analysis. It involves extracting data from one or more source systems, transforming it into a suitable format or structure, and then loading it into a target data repository, such as a data warehouse or a database. Here's a high-level overview of the ETL process:
+The integrated ETL process for the MRTS dataset involves:
 
-Extract: In this phase, data is collected from one or more source systems including databases and files. This project extracts the data from an Excel file separated in worksheets. Only the *Not-Adjusted* data and the columns of Kind of Business and all 12 months are retained in the MRTS. Any extraneous data including data aggregation rows or columns are be considered. In this project, the process is realized by preliminary data cleaning and manipulation in DataFrames read from the source Excel using Pandas ExcelFile.
-
-Transform: Data is transformed into a consistent format suitable for analysis. This project automates the transforming process through a Python script to output CSV files by using `pandas.to_csv`.
-
-Load: The transformed data is loaded into a target data repository. This repository can be a data warehouse, a data lake, a relational database, or other storage systems. This project uses a Python installation script relying on `SQLAlchemy.create_engine` and `mysql.connector` for database connectivity and creates the *mrts* database in the MySQL Server if it does not already exist. It then creates all the tables in the database from the exported CSV files.
-
-In summary, integrated ETL process in Python code for the MRTS dataset involves implementing direct import of data from the raw Excel in Pandas DataFrames, preliminary data cleaning and manipulation in DataFrames before outputting, exporting DataFrames to CSV files, and loading CSV files into a MySQL database as tables.
-
-ETL processing is highly customizable and Python adds the additional benefits of straightforward analysis and display of data through libraries such as Pandas, Matplotlib, and Numpy. It allows for more automations leading to greater efficiency and increased productivity.
-
-The real-time insights that benefit from the integrated process provides convenience during the data transformation process to monitor the results of each operation and provide immediate feedback to facilitate timely decision-making. Any changes or adjustments required during the ETL process could be immediately accounted for in the subsequent analysis stage.
+1. **Extract**: Data is extracted from an Excel file containing multiple worksheets, but only the *Not-Adjusted* data and the columns for *Kind of Business* and all 12 months are retained. Any extraneous data, including aggregation rows or columns, is excluded. This extraction process is facilitated by preliminary data cleaning and manipulation using `pandas.ExcelFile`.
+2. **Transform**: Preliminary data cleaning and manipulation are performed within the DataFrames, which are then exported to CSV files. The transformation process is automated using a CSV extraction script that outputs CSV files through the `pandas.to_csv` function.
+3. **Load**: The CSV files are loaded into a MySQL database as tables. A database creation script utilizes `sqlalchemy.create_engine` and `mysql.connector` for database connectivity. This script creates the *mrts* database in MySQL (if it does not already exist) and loads the CSV files into the database as tables.
 
 [Back to top](#Index)
 
 ### 2.2 Data Exploration
- 
-The data of Monthly Retail Trade Survey (MRTS) released by *[census.gov](https://www.census.gov/retail/index.html)* is gathered from retail businesses to provide information about the retail sector's performance in the United States.
 
-The raw Excel is separated by one worksheet per year, from 1992 to 2021. In each worksheet it lists the estimated monthly economic activity in the retail sector on a per month basis. The spending data is broken out by industry (sector), idenftied by one or several numeric codes. The data is in millions of dollars. Note that only the sales data for the first 2 months of 2021 are provided, so it is necessary to distinguish its table structure from other years.
+The data for the Monthly Retail Trade Survey (MRTS) released by the *[U.S. Census Bureau](https://www.census.gov/retail/index.html)* is gathered from retail businesses to provide information about the retail sector's performance in the United States.
 
-If the data do not meet publication standards due to high sampling variability, or if there are other concerns about the quality of the estimates, they are shown as *(S)*, and considered "suppressed". This type of value is supposed to be converted to a *null*. However, according to actual needs, it can be left as is without conversion during the transform process. When analysis involves any including *(S)*, it will be reviewed and handled on a case-by-case basis. For instance, under Section 3.4, a couple of missing data occuring in 2020 under men's clothing stores category are treated by imputation using linear method.
+The raw Excel data is organized with one worksheet per year, from 1992 to 2021. Each worksheet lists the estimated monthly economic activity in the retail sector on a per-month basis. The spending data is broken down by industry (sector) and identified by one or several numeric codes. The data is presented in millions of dollars. Note that only the sales data for the first two months of 2021 are provided, and it is necessary to distinguish its table structure from other years.
 
-There are two main categories of estimates: *Non-adjusted* and *Adjusted*. *Non-adjusted* is the raw sales data, while *Adjusted* are the estimates presents sales data that has been adjusted for seasonal variations, holidays, or other factors to provide a more accurate picture of monthly sales trends. For the purposes of the analysis of this project, the *Non-adjusted* is to be worked with.
+If the data does not meet publication standards due to high sampling variability or other quality concerns, it is shown as *(S)* and considered "suppressed." These values should be converted to null. However, they can be left as is without conversion during the transform process if needed. When analysis involves any *(S)* values, they will be reviewed and handled on a case-by-case basis. For instance, under Section 3.3, missing data for men's clothing stores in 2020 were treated by imputation using a linear method.
+
+There are two main categories of estimates: *Non-adjusted* and *Adjusted*. *Non-adjusted* is the raw sales data, while *Adjusted* are the estimates presents sales data adjusted for seasonal variations, holidays, or other factors to provide a more accurate picture of monthly sales trends. For the purposes of this project's analysis, the *Non-adjusted* data was used.
 
 [Back to top](#Index)
 
 ### 2.3 Data Preparation
-
-The detailed data preparation process performed in this project is described step by step in the following Python script.
 
 
 ```python
@@ -175,45 +146,9 @@ print(f'"2021.csv" saved in folder "csv" successfully!')
 
 [Back to top](#Index)
 
-### 2.4 Read the Data Using Python
+### 2.4 Reading MRTS Data
 
-Python offers many methods for reading and handling CSV and Excel files. The Pandas library does the heavy lifting of reading them. By executing simple functions such as *pandas.read_csv*, *pandas.ExcelFile*, and *pandas.ExcelFile.sheet_names* the contents of a properly formed CSV, Excel, or Excel worksheet can be deposited into an easily manipulable DataFrame.
-
-[Back to top](#Index)
-
-### 2.4.1 Reading Sample Data
-
-By using *csv.reader* function provided in the csv Python library, a sample CSV file containing created data can be smoothly read as below.
-
-
-```python
-import csv
-
-sample_path = os.getcwd()+'/sample.csv'
-with open(sample_path, 'r') as fi:
-    csv_reader = csv.reader(fi, delimiter=',')
-    for row in fi:
-        print(row)
-```
-
-    CollegeID,Name,Students,City,Region,Country
-    
-    1,MIT,11,Cambridge,MA,USA
-    
-    2,Brown,9,Providence,RI,USA
-    
-    3,Dartmouth,6,Hanover,NH,USA
-    
-    4,Stanford',17,Stanford,CA,USA
-    
-    5,Yale,12,New Haven,CT,USA
-
-
-[Back to top](#Index)
-
-### 2.4.2 Reading the MRTS Data
-
-To read the MRTS CSV file using a Python script can be achieved using *pandas.read_csv* provided in the Pandas library alternative to *csv.reader* from the csv library. As explained and completed in Section 2.3, the MRTS CSVs output by year have all been successfully saved in the specified directory, the csv folder. The data from each year can be read and stored in a DataFrame. An example csv (2008.csv) containing data for 2008 is shown below.
+Python offers many methods for reading and handling CSV and Excel files, with the Pandas library being particularly effective for these tasks. Simple functions such as `pandas.read_csv` (an alternative to `csv.reader`), `pandas.ExcelFile`, and `pandas.ExcelFile.sheet_names` allow the contents of properly formed CSV, Excel, or Excel worksheets to be easily loaded into DataFrames for manipulation. As detailed in Section 2.3, the MRTS CSV files, organized by year, have all been successfully saved in the *csv* directory. The data from each year can be read and stored in a DataFrame. Below is an example of reading a CSV file (2008.csv) containing data for 2008.
 
 
 ```python
@@ -457,9 +392,7 @@ df
 
 [Back to top](#Index)
 
-### 2.5 Writing an Installation Script
-
-The detailed installation script writing process implemented in this project is described step by step in the following Python script.
+### 2.5 Writing Database Creation Script
 
 
 ```python
@@ -469,7 +402,7 @@ import os
 from sqlalchemy import create_engine
 import pandas as pd
 
-doc = yaml.safe_load(open('SQL_Conn_Config.yaml'))
+doc = yaml.safe_load(open('mysql_cnx_config.yaml'))
 config = {
     'user':doc['user'],
     'passwd':doc['passwd'],
@@ -544,27 +477,9 @@ except mysql.connector.Error as err:
 
 ## 3. Analysis and Visualization
 
-The differences, advantages, and disadvantages of running *queries* against a dataset using the MySQL Workbench or a Python environment are summarized below.
-
-Differences:
-- MySQL Workbench is a graphical user interface (GUI) tool specifically designed for managing MySQL databases. It provides a point-and-click interface to interact with MySQL databases.
-- Queries are typically written in SQL, which is a standard language for managing and querying relational databases.
-
-Advantages:
-- User-Friendly: MySQL Workbench is user-friendly and can be a great choice for users who prefer a visual interface for managing databases.
-- Database Management: In addition to running queries, MySQL Workbench offers tools for database administration, schema design, and more.
-
-Disadvantages:
-- Limited Scripting: While MySQL Workbench supports SQL scripting, it may not be the best choice for advanced data manipulation or analysis that requires scripting capabilities.
-- Less Automation: It's less suitable for automating data extraction and manipulation processes.
-- Limited Integration: It's primarily designed for MySQL databases and may not be as versatile when working with other data sources.
-- Visual Data Exploration: The built-in data modeling and visualization tools pale in comparison to the powerful functions of Python’s data visual display libraries such as Matplotlib and Seaborn.
-
 [Back to top](#Index)
 
 ### 3.1 Running Queries From Python
-
-The process of running the previous queries on the MRTS dataset by using a Python script is shown step by step in the following Python script. The print results are the same as in MySQL Workbench, verifying that everything works as expected.
 
 
 ```python
@@ -586,12 +501,11 @@ cnx = mysql.connector.connect(**config)
 # Assign cursor function to a handle to issue queries
 cursor = cnx.cursor()
 
-# Execute SQL query 1 run in Section 3.1 using the execute method of the cursor class in mysql.connector library
+# Execute SQL query using the execute method of the cursor class in mysql.connector library
 cursor.execute('SELECT * FROM mrts.`2008` WHERE Total >= 1500000 ORDER BY `Total` DESC')
 for row in cursor.fetchall():
     print(row)
 
-# Execute SQL query 2 run in Section 3.1 using the execute method of the cursor class in mysql.connector library
 cursor.execute('SELECT COUNT(*) Count FROM mrts.`2008`')
 print(cursor.fetchone())
 ```
@@ -609,33 +523,34 @@ print(cursor.fetchone())
 
 ### 3.2 Explore Trends
 
-An economic trend refers to the general direction in which a particular economic variable or set of variables is moving over time. Economic trends can encompass a wide range of factors, including economic indicators like GDP, inflation rates, unemployment rates, consumer spending, and more. These trends are used to analyze and understand the overall health and performance of an economy. Consumer spending patterns are often influenced by broader economic trends. In a robust economy with low unemployment, consumers may be more confident and willing to spend, while during economic downturns, consumers may cut back on spending.
+An economic trend refers to the general direction in which a particular economic variable or set of variables moves over time. These trends can encompass a wide range of factors, including economic indicators like GDP, inflation rates, unemployment rates, consumer spending, and more. They are used to analyze and understand the overall health and performance of an economy. Consumer spending patterns are often influenced by broader economic trends. In a robust economy with low unemployment, consumers may be more confident and willing to spend, while during economic downturns, consumers may cut back on spending.
 
-Trend exploration SQL queries
-- The query to explore the trend of the retail and food services sales category in the data is below. By running this query in a loop in Python, the retail and food services rows from all tables in mrts database are collected into a list and then concatenated into a single table for effective analysis and data visualization.
+**Trend Exploration SQL Queries**
+- To explore the trend of the retail and food services sales category, use the following query. By running this query in a loop in Python, the retail and food services rows from all tables in the *mrts* database are collected into a list and then concatenated into a single table for effective analysis and data visualization:
+
 ```python
 SELECT * FROM mrts.`{i}` WHERE `Kind of Business` = "Retail and food services sales, total"
 ```
 
-- The following query is used to explore differences in trends among the target 3 categories: bookstores, sporting goods stores, hobby, toy and game stores. By running this query in a loop in Python, the subtables including the 3 categories in rows and time series in columns from all tables in mrts database are collected into a list and then concatenated into a single table for effective analysis and data visualization.
+- To explore differences in trends among the target categories — bookstores, sporting goods stores, and hobby, toy, and game stores — use the following query. By running this query in a loop in Python, the subtables containing these categories in rows and time series in columns from all tables in the *mrts* database are collected into a list and then concatenated into a single table for effective analysis and data visualization:
 ```python
 SELECT * FROM mrts.`{i}`
 WHERE `Kind of Business` IN ("Book stores", "Sporting goods stores", "Hobby, toy, and game stores")
 ```
 
-Analysis of the trend of the retail and food services categories
-- Since there is no missing data provided for the retail and food services category, it exhibits good continuity and completeness over the time series, which helps in perceiving the trend. Although in the long term, an uptrend with a strong seasonal pattern is evident enough, since the graph is a bit noisy, to see a clearer trend I chose July sales as a more reasonable coarseness since the average sales in a typical year are closest to July sales. The long-term trend visualized from the coarsened data is more pronounced, with a mid-term decline from 2008 to 2009, which corresponds to the Great Recession that occurred from late 2007 to 2009.
+**Analysis of the Trend of the Retail and Food Services Categories**
+- The retail and food services category data is complete and continuous over the time series, which helps in perceiving trends. Although the long-term data shows an uptrend with a strong seasonal pattern, the graph is a bit noisy. To see a clearer trend, July sales was chosen as a representative sample since the average sales in a typical year are closest to July sales. The long-term trend visualized from this coarsened data is more pronounced, with a mid-term decline from 2008 to 2009, corresponding to the Great Recession from late 2007 to 2009.
 
-Comprehensive trend analysis and comparison of the performance of the three chosen businesses of bookstores, sporting goods stores, hobby, toy and game stores
-- When choosing the businesses of bookstores, sporting goods stores, and hobby, toy and game stores for comparison, the sporting goods business was the highest trend and grew fastest among all of these choices, followed by the hobby, toy and game business. However, regardless of seasonal fluctuations, the long-term trend of the hobby, toy and game business remained stationary. In contrast, the bookstore business has shown a clear long-term downtrend since 2008.
+**Comprehensive Trend Analysis and Comparison of the Three Chosen Businesses**
+- When comparing bookstores, sporting goods stores, and hobby, toy, and game stores, the sporting goods business showed the highest trend and fastest growth, followed by the hobby, toy, and game business. However, the long-term trend of the hobby, toy, and game business remained stationary, while the bookstore business showed a clear long-term downtrend since 2008.
 
-- All 3 businesses presented their respective seasonal patterns. The seasonal pattern of the sporting goods business is basically consistent with that of the hobby, toy and game business, with the peak season occurring in early December and the slack season occurring in early January. The bookstore business had two sales peaks in August and early December but no obious slack season. As for the bookstore business, there were two sales peaks in August and December but no obvious off season.
+- All three businesses exhibited their respective seasonal patterns. The seasonal pattern of the sporting goods business is consistent with that of the hobby, toy, and game business, with the peak season in early December and the slack season in early January. The bookstore business had two sales peaks in August and early December but no obvious slack season.
 
-- Sales in all three businesses unexceptionally experienced sudden declines in April 2020 that were inconsistent with their seasonal patterns. After that drop, the sporting goods business not only rebounded quickly within two months but also hit a new sales high and continued the trend of year-over-year (YOY) growth. The other two businesses still maintained their respective long-term stationary trend and downtrends after recovering from the trough.
+- Sales in all three businesses experienced sudden declines in April 2020, inconsistent with their seasonal patterns. After that drop, the sporting goods business rebounded quickly within two months, hit a new sales high, and continued the trend of year-over-year (YOY) growth. The other two businesses maintained stationary and downward trends respectively in the long term after recovering from the trough.
 
 
 ```python
-# Collect the row of retail and food services from all tables in mrts database into a list by looping an SQL query
+# Collect rows of retail and food services from all tables in the mrts database into a list by looping an SQL query
 rfs_ls = []
 for i in range(1992,2022):
     rfs_sql = f'SELECT * FROM mrts.`{i}` WHERE `Kind of Business` = "Retail and food services sales, total"'
@@ -754,21 +669,21 @@ plt.show()
 
 ### 3.3 Explore Percentage Change
 
-Percentage change is used to calculate by what percentage a variable has changed over a time period. One example is the percentage change in end of day closing prices of stocks. Percentage change is a crucial measure in economics and various other fields because it helps to quantify and express how much a particular variable or quantity has changed in relative terms, rather than absolute terms. It is calculated by the formula below, where $C =$ relative change, $x_{1} =$ previous value, and $x_{2} =$ current value.
-$$ C(\%) = \frac{(x_{2}-x_{1})}{x_{1}} * 100 $$
+Percentage change calculates the rate at which a variable changes over a period. For example, it measures the percentage change in end-of-day closing prices of stocks. This measure is crucial in economics and various other fields because it quantifies how much a particular variable or quantity has changed in relative terms rather than absolute terms. It is calculated using the formula below, where $C$ is the relative change, $x_{1}$ is the previous value, and $x_{2}$ is the current value:
+$$ C(\%) = \frac{(x_{2}-x_{1})}{x_{1}} \times 100 $$
 
-Percentage change exploration SQL queries
-- The query to explore the percentage change of men's and women's clothing businesses in the data is below. By running this query in a loop in Python, the subtables containing these 2 categories in rows and time series in columns from all tables in mrts database are collected into a list and then concatenated into a single table for effective analysis and data visualization.
+**Percentage Change Exploration SQL Queries**
+- To explore the percentage change of men's and women's clothing businesses in the data, use the SQL query below. By running this query in a loop in Python, the subtables containing these two categories in rows and time series in columns from all tables in the *mrts* database are collected into a list and then concatenated into a single table for effective analysis and data visualization:
 ```python
 SELECT * FROM mrts.`{i}` WHERE `Kind of Business` IN ("Men\'s clothing stores", "Women\'s clothing stores")
 ```
-By Plotting the percentage changes from yearly coarsened data chosen from September, which was the month closest to annual average sales, it is noticeable that the percentage change directions for both businesses are correlated most of the time throughout the time frame, except that during the periods 1993-1999 and 2016-2019, the opposite directions of the percentage changes in the two can be captured.
+By plotting the percentage changes from yearly coarsened data chosen from September (the month closest to annual average sales), it is noticeable that the percentage change directions for both businesses are correlated most of the time throughout the time frame. However, during the periods 1993-1999 and 2016-2019, opposite directions of the percentage changes in the two businesses are observed.
 
-As far as these two businesses are concerned, the women's clothing business contributed an average of 80% of the overall clothing market, fluctuating between 75% and 85%, while the men's clothing business only accountsed for about 20% of the overall market. Looking at the time series, the women's clothing business experienced a slight downtrend from 1992 to 1998, with the quota falling to 75%, followed by a long-term rise until it reached 85% in 2010. In the 10 years since 2010, it slowly dropped back to 80%. In 2020, its sales proportion jumped significantly to 85%. Percent change trend in men's clothing business can be easily deduced from women's clothing changes over time.
+Regarding these two businesses, the women's clothing business contributed an average of 80% of the overall clothing market, fluctuating between 75% and 85%, while the men's clothing business accounted for about 20% of the overall market. Analyzing the time series, the women's clothing business experienced a slight downtrend from 1992 to 1998, with its market share falling to 75%, followed by a long-term rise until it reached 85% in 2010. In the 10 years since 2010, it slowly dropped back to 80%. In 2020, its sales proportion jumped significantly to 85%. The percentage change trend in the men's clothing business can be easily deduced from the women's clothing changes over time.
 
 
 ```python
-# Collect rows of men's clothing stores and women's clothing stores from all tables in mrts database
+# Collect rows of men's clothing stores and women's clothing stores from all tables in the mrts database
 mwc_ls = []
 for i in range(1992,2022):
     mwc_sql = f'SELECT * FROM mrts.`{i}` \
@@ -855,18 +770,18 @@ plt.show()
 
 ### 3.4 Explore Rolling Time Windows
 
-A rolling time window, in economics and data analysis, is a method used to analyze data over a specific time period that continuously updates as time progresses. It involves repeatedly computing statistics or performing analysis on a fixed-size time interval of data, then moving the window forward by a certain time increment (e.g., days, weeks, months) and performing the same analysis again. This rolling or moving window approach allows for a dynamic assessment of data trends and patterns over time.
+A rolling time window in economics and data analysis is a method used to analyze data over a specific time period that continuously updates as time progresses. It involves repeatedly computing statistics or performing analysis on a fixed-size time interval of data, then moving the window forward by a certain time increment (e.g., days, weeks, months) and performing the same analysis again. This rolling or moving window approach allows for a dynamic assessment of data trends and patterns over time.
 
-Rolling time window exploration SQL queries
-- The following query is used to graphs of rolling time windows for 2 target businesses: automobile dealers and gasoline stations. By running this query in a loop in Python, the subtables including both businesses in rows and time series in columns from all tables in mrts database are collected into a list and then concatenated into a single table for effective analysis and data visualization.
+**Rolling Time Window Exploration SQL Queries**
+- The following query is used to create graphs of rolling time windows for two target businesses: automobile dealers and gasoline stations. By running this query in a loop in Python, the subtables including both businesses in rows and time series in columns from all tables in the *mrts* database are collected into a list and then concatenated into a single table for effective analysis and data visualization.
 ```python
 SELECT * FROM mrts.`{i}` WHERE `Kind of Business` IN ("Automobile dealers", "Gasoline stations")
 ```
-By analyzing data over a rolling window, the noise and fluctuations in the data can be reduced. This helps in identifying underlying trends and patterns while mitigating the impact of short-term, random variations. The rolling average sales of the 2 businesses was basically consistent in the overall trend direction before 2012. After that, the sales of gasoline stations began a downtrend in a wavy pattern, while the sales of the automobile dealers maintained a strong rise. The Great Recession in 2008-2010 were fairly reflected in the steep sales slides for both businesses during the corresponding period.
+By analyzing data over a rolling window, noise and fluctuations in the data can be reduced. This helps in identifying underlying trends and patterns while mitigating the impact of short-term, random variations. The rolling average sales of the two businesses were consistent in the overall trend direction before 2012. After that, the sales of gasoline stations began a downtrend in a wavy pattern, while the sales of automobile dealers maintained a strong rise. The Great Recession in 2008-2010 was reflected in the steep sales slides for both businesses during the corresponding period.
 
 
 ```python
-# Collect rows of automobile dealers and gasoline stations from all tables in mrts database
+# Collect rows of automobile dealers and gasoline stations from all tables in the mrts database
 car_ls = []
 for i in range(1992,2022):
     car_sql = f'SELECT * FROM mrts.`{i}` WHERE `Kind of Business` IN ("Automobile dealers", "Gasoline stations")'
@@ -910,9 +825,9 @@ plt.show()
 
 ## Conclusion
 
-By applying several of the most important techniques including trends, percentage changes, and rolling time windows to analyze time series against the mrts database, and with the help of data visualization, the following conclusions are drawn.
+By applying several key techniques, including trend analysis, percentage changes, and rolling time windows, to the MRTS dataset and using data visualization, the following conclusions are drawn:
 
-Among all the businesses studied above, retail and food services, sporting goods stores and car dealers have all increased in sales by about two times in the time series, and are therefore considered likely to attract the most spending, while bookstores, as a traditional business, have sustained a downtrend in time series since 2008. They are expected to attract the least spending in the future.
+Among all the businesses studied, retail and food services, sporting goods stores, and car dealers have all experienced approximately a twofold increase in sales over the time series. These sectors are likely to attract the most spending in the future. In contrast, bookstores, as a traditional business, have sustained a downtrend since 2008 and are expected to attract the least spending going forward.
 
 [Back to top](#Index)
 

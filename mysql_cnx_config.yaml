@@ -1,0 +1,8 @@
+# One of the most common uses for YAML is to create configuration files to simplify the communication between a client and a server.
+# It's recommended that configuration files be written in YAML rather than JSON for better readability and being more user-friendly.
+--- # The three dashes at the top of the document symbolize the beginning of a new YAML file.
+user: 'root'
+passwd: ''
+host: 'localhost'
+db: 'mrts'
+# The colon in a YAML map (key-value pair) must be followed by a space.
