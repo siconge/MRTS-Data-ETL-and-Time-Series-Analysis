@@ -14,10 +14,10 @@
     - [2.1 The ETL Process](#2.1-The-ETL-Process)
     - [2.2 Data Exploration](#2.2-Data-Exploration)
     - [2.3 Data Preparation](#2.3-Data-Preparation)
-    - [2.4 Read MRTS Data](#2.4-Reading-MRTS-Data)
-    - [2.5 Writing Database Creation Script](#2.5-Writing-Database-Creation-Script)
+    - [2.4 Read MRTS Data](#2.4-Read-MRTS-Data)
+    - [2.5 Database Creation](#2.5-Database-Creation)
 - [3. Analysis and Visualization](#3.-Analysis-and-Visualization)
-    - [3.1 Running Queries From Python](#3.1-Running-Queries-From-Python)
+    - [3.1 Run Queries From Python](#3.1-Run-Queries-From-Python)
     - [3.2 Explore Trends](#3.2-Explore-Trends)
     - [3.3 Explore Percentage Change](#3.3-Explore-Percentage-Change)
     - [3.4 Explore Rolling Time Windows](#3.4-Explore-Rolling-Time-Windows)
@@ -146,7 +146,7 @@ print(f'"2021.csv" saved in folder "csv" successfully!')
 
 [Back to top](#Index)
 
-### 2.4 Reading MRTS Data
+### 2.4 Read MRTS Data
 
 Python offers many methods for reading and handling CSV and Excel files, with the Pandas library being particularly effective for these tasks. Simple functions such as `pandas.read_csv` (an alternative to `csv.reader`), `pandas.ExcelFile`, and `pandas.ExcelFile.sheet_names` allow the contents of properly formed CSV, Excel, or Excel worksheets to be easily loaded into DataFrames for manipulation. As detailed in Section 2.3, the MRTS CSV files, organized by year, have all been successfully saved in the *csv* directory. The data from each year can be read and stored in a DataFrame. Below is an example of reading a CSV file (2008.csv) containing data for 2008.
 
@@ -392,7 +392,7 @@ df
 
 [Back to top](#Index)
 
-### 2.5 Writing Database Creation Script
+### 2.5 Database Creation
 
 
 ```python
@@ -479,7 +479,7 @@ except mysql.connector.Error as err:
 
 [Back to top](#Index)
 
-### 3.1 Running Queries From Python
+### 3.1 Run Queries From Python
 
 
 ```python
